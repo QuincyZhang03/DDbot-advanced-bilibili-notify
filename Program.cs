@@ -38,8 +38,6 @@ namespace QuincyDataKeeper
                     string title = query["title"];
                     DateTime time = DateTime.Now;
                     bool on = timedic.ContainsKey(id); //如果数据字典里已经有该主播的数据，则on为true
-                    Console.WriteLine($"[消息 {time}]主播{id}现在状态为{status}，标题为{title}。更改标题：{on && status == STATUS_ONLINE}");
-
                     if (status == STATUS_ONLINE && !on)
                     {//主播首次开播 
                         timedic.Add(id, new LiveData(title, time));
@@ -77,6 +75,16 @@ namespace QuincyDataKeeper
                             SendResponse(respData, response);
                         }
                     }
+                    Console.WriteLine($"********************[消息 {time}]********************");
+                    Console.WriteLine($"主播{id}现在状态为{status}，标题为{title}。更改标题：{on && status == STATUS_ONLINE}\n");
+                    Console.WriteLine("序号\t\t昵称\t\t标题");
+                    int index = 1;
+                    foreach (KeyValuePair<string, LiveData> data in timedic)
+                    {
+                        Console.WriteLine($"{index}\t\t{data.Key}\t\t{data.Value.Title}");
+                        index++;
+                    }
+                    Console.WriteLine();
                 }
             }
         }
